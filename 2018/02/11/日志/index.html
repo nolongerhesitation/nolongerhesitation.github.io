@@ -1,0 +1,238 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<link rel="bookmark"  type="image/x-icon"  href="/img/logo_miccall.png"/>
+	 <link rel="shortcut icon" href="/img/logo_miccall.png">
+	
+			
+    <title>
+    Hexo
+    </title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/css/mic_main.css" />
+    <link rel="stylesheet" href="/css/dropdownMenu.css" />
+    
+    	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+    <noscript>
+        <link rel="stylesheet" href="/css/noscript.css" />
+    </noscript>
+
+			    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.scrollex.min.js"></script>
+    <script src="/js/jquery.scrolly.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/util.js"></script>
+    <script src="/js/main.js"></script>
+	
+</head>
+    
+		
+<!-- Layouts -->
+
+
+
+<!--  代码渲染  -->
+<link rel="stylesheet" href="/css/prism_coy.css" />
+<link rel="stylesheet" href="/css/typo.css" />
+<!-- 文章页 -->
+<body class="is-loading">
+    <!-- Wrapper 外包 s-->
+    <div id="wrapper" class="fade-in">
+        <!-- Intro 头部显示 s -->
+        <!-- Intro 头部显示 e -->
+        <!-- Header 头部logo start -->
+        <header id="header">
+    <a href="/" class="logo">no hesitate</a>
+</header>
+        <!-- Nav 导航条 start -->
+        <nav id="nav" class="special" >
+            <ul class="menu links" >
+			<!-- Homepage  主页  --> 
+			<li >
+	            <a href="/" rel="nofollow">主页</a>
+	        </li>
+			<!-- categories_name  分类   --> 
+	        
+	        <li class="active">
+	            <a href="#s1">分类</a>
+	                    <ul class="submenu">
+	                        <li>
+	                        <a class="category-link" href="/categories/Java/">Java</a></li><li><a class="category-link" href="/categories/article/">article</a>
+	                    </ul>
+	        </li>
+	        
+	        <!-- archives  归档   --> 
+	        
+	        
+		        <!-- Pages 自定义   -->
+		        
+		        <li>
+		            <a href="/about/" title="简历">
+		                简历
+		            </a>
+		        </li>
+		        
+		        <li>
+		            <a href="/group/" title="团队">
+		                团队
+		            </a>
+		        </li>
+		        
+		        <li>
+		            <a href="/gallery/" title="图库">
+		                图库
+		            </a>
+		        </li>
+		        
+		        <li>
+		            <a href="/tag/" title="标签">
+		                标签
+		            </a>
+		        </li>
+		        
+
+
+            </ul>
+            <!-- icons 图标   -->
+			<ul class="icons">
+		            
+		                <li><a href="https://github.com/miccall" class="icon fa-github"><span class="label">GitHub</span></a></li>
+		            
+		            
+		            
+		            
+			</ul>
+</nav>
+
+        <div id="main" >
+            <div class ="post_page_title_img" style="height: 25rem;background-image: url(/images/mypic/2.jpg);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
+                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >Spring+SpringMvc日志生成</h2></a>
+            </div>
+            <!-- Post -->
+            <div class="typo" style="padding: 3rem;">
+                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="一、内容简述"><a href="#一、内容简述" class="headerlink" title="一、内容简述"></a>一、内容简述</h2><p>本文章主要是讲述在实际项目中有应用到日志生成方式，网上也会有很多简单的demo,demo给我的体会是简单易实现但与在实际应用中相差较大，尤其是业务逻辑上，有时就会出现demo很明白但是实际还是不会应用，本文章中代码等都是在实际项目中直接拿取的（重在体会是业务逻辑，然后可以自行仿照模拟实现，达到学以致用）。</p>
+<h2 id="二、主要思想"><a href="#二、主要思想" class="headerlink" title="二、主要思想"></a>二、主要思想</h2><p>利用自定义拦截器拦截请求，然后读取配置文件（内部配置记录生成日志的模块和方法）对用户信息、系统信息以及操作请求信息进行持久化保存。</p>
+<h2 id="三、开发工具和环境"><a href="#三、开发工具和环境" class="headerlink" title="三、开发工具和环境"></a>三、开发工具和环境</h2><p>IntelliJ IDEA 2017.2.4<br>JDK 1.7,Spring 4.2.6.RELEASE,MAVEN 3.5.2, TOMCAT 8.5</p>
+<h2 id="四、项目应用"><a href="#四、项目应用" class="headerlink" title="四、项目应用"></a>四、项目应用</h2><h3 id="1、自定义拦截器"><a href="#1、自定义拦截器" class="headerlink" title="1、自定义拦截器"></a>1、自定义拦截器</h3><p><i><b>步骤1：</b></i>在工程中新建一个文件夹filter，在文件夹下新建java类,如下图所示<br><img src="/images/mypic/rizhi/rizhi-1.jpg"><br><i><b>步骤2：</b></i>配置拦截器，打开Spring-mvc.xml配置文件，找到拦截器配置在最后边配置拦截器如下图<br><img src="/images/mypic/rizhi/rizhi-2.png"><br><i><b>步骤3：</b></i>UserInterceptor实现HandlerInterceptor接口，并覆盖HandlerInterceptor接口中三个方法（如下图）,具体实现后附，<br><img src="/images/mypic/rizhi/rizhi-3.png"><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">说明：</span><br><span class="line">	preHandle：预处理回调方法，实现处理器的预处理（如登录检查），第三个参数为响应的处理器；返回值：<span class="literal">true</span>表示继续流程</span><br><span class="line">	（如调用下一个拦截器或处理器）；<span class="literal">false</span>表示流程中断（如登录检查失败），不会继续调用其他的拦截器或处理器，此时我们</span><br><span class="line">	需要通过response来产生响应；</span><br><span class="line">	postHandle：后处理回调方法，实现处理器的后处理（但在渲染视图之前），此时我们可以通过 modelAndView（模型和视图</span><br><span class="line">	对象）对模型数据进行处理或对视图进行处理，modelAndView也可能为null。</span><br><span class="line">	afterCompletion：整个请求处理完毕回调方法，即在视图渲染完毕时回调，如性能监控中我们可以在此记录结束时间并输出消</span><br><span class="line">	耗时间，还可以进行一些资源清理，类似于try-catch-finally中的finally，但仅调用处理器执行链中preHandle返回<span class="literal">true</span></span><br><span class="line">	的拦截器的afterCompletion。</span><br></pre></td></tr></table></figure></p>
+<p><b>以下是三个方法在项目中的具体实现，重在体会业务逻辑</b><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public boolean preHandle(HttpServletRequest request, HttpServletResponse response, </span><br><span class="line">	Object handler)</span><br><span class="line">		throws Exception &#123;</span><br><span class="line"><span class="keyword">if</span> (!request.getRequestURI().equals(request.getContextPath() + <span class="string">"/login"</span>)) &#123;</span><br><span class="line">	HttpSession session = request.getSession(<span class="literal">true</span>);</span><br><span class="line">	// 从session 里面获取用户名的信息</span><br><span class="line">	<span class="keyword">if</span>(StringUtils.isNoneBlank(request.getQueryString())&amp;&amp;request.getQueryString()</span><br><span class="line">		.indexOf(<span class="string">"shelllogin"</span>)&gt;0)&#123;//免登陆判断</span><br><span class="line"></span><br><span class="line">		String  params = request.getParameter(<span class="string">"params"</span>);</span><br><span class="line">		<span class="keyword">if</span>(!StringUtils.isNoneBlank(params))&#123;//无参直接跳转首页</span><br><span class="line">			response.sendRedirect(request.getContextPath() +</span><br><span class="line">				<span class="string">"/webpage/login.jsp"</span>);// 首页居多</span><br><span class="line">			<span class="built_in">return</span> <span class="literal">false</span>;//</span><br><span class="line">		&#125;</span><br><span class="line">		String b = java.net.URLDecoder.decode(DesUtils.decrypt(params, <span class="string">"12345678"</span>),</span><br><span class="line">			 <span class="string">"utf-8"</span>);</span><br><span class="line">		DocumentBuilderFactory factory = DocumentBuilderFactory   </span><br><span class="line">				 .newInstance();   </span><br><span class="line">		DocumentBuilder builder = factory.newDocumentBuilder();   </span><br><span class="line">		Document doc = builder   </span><br><span class="line">				 .parse(new InputSource(new StringReader(b)));   </span><br><span class="line"></span><br><span class="line">		Element root = doc.getDocumentElement();   </span><br><span class="line">		NodeList books = root.getChildNodes();  </span><br><span class="line">		<span class="keyword">if</span> (books != null) &#123;  </span><br><span class="line">			String name=<span class="string">""</span>;</span><br><span class="line">			String <span class="built_in">pwd</span>=<span class="string">""</span>;</span><br><span class="line">			<span class="keyword">for</span> (int i = 0; i &lt; books.getLength(); i++) &#123;   </span><br><span class="line">				Node book = books.item(i);   </span><br><span class="line">				try &#123;</span><br><span class="line">					<span class="keyword">if</span>(<span class="string">"pname"</span>.equals(book.getNodeName()))&#123;</span><br><span class="line">						   name=book.getFirstChild().getNodeValue();</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="keyword">if</span>(<span class="string">"pwd"</span>.equals(book.getNodeName()))&#123;</span><br><span class="line">						  <span class="built_in">pwd</span>=book.getFirstChild().getNodeValue();  </span><br><span class="line">					&#125;</span><br><span class="line">				&#125; catch (Exception e) &#123;</span><br><span class="line">					<span class="built_in">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			  &#125; </span><br><span class="line">			String sql = <span class="string">"SELECT PASSWORD FROM admin_user WHERE USER_NAME='"</span>+name+<span class="string">"' "</span>;</span><br><span class="line">			List&lt;Map&lt;String, Object&gt;&gt; list = userService.getObjectBySql(sql);</span><br><span class="line">			<span class="keyword">if</span> (list==null||list.size()&lt;1||</span><br><span class="line">				!CypherUtil.Decrypt(list.get(0).get(<span class="string">"PASSWORD"</span>)</span><br><span class="line">					.toString()).equals(<span class="built_in">pwd</span>)) &#123;</span><br><span class="line">				response.sendRedirect(request.getContextPath() + </span><br><span class="line">						<span class="string">"/webpage/login.jsp"</span>);// 首页居多</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				UserObject user = userService.getSysUserInfoByUserName(name);</span><br><span class="line">				session.setAttribute(Constant.LoginField.USER, user);</span><br><span class="line">				response.sendRedirect(request.getContextPath());//进入</span><br><span class="line">				</span><br><span class="line">			&#125;</span><br><span class="line">		   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			   response.sendRedirect(request.getContextPath() + </span><br><span class="line">					<span class="string">"/webpage/login.jsp"</span>);// 首页居多</span><br><span class="line">		   &#125; </span><br><span class="line">		</span><br><span class="line">		 <span class="built_in">return</span> <span class="literal">false</span>;//</span><br><span class="line">	&#125;</span><br><span class="line">	Object obj = session.getAttribute(Constant.LoginField.USER);</span><br><span class="line">	// 判断如果没有取到用户信息，就跳转到登陆页面，提示用户进行登陆</span><br><span class="line">	String requestType = request.getHeader(<span class="string">"X-Requested-With"</span>);</span><br><span class="line">		// 识别ajax的响应头</span><br><span class="line">	<span class="keyword">if</span> (obj == null || <span class="string">""</span>.equals(obj.toString())) &#123;</span><br><span class="line">		<span class="keyword">if</span> (requestType != null &amp;&amp; requestType.equals(<span class="string">"XMLHttpRequest"</span>)) &#123;</span><br><span class="line">			// 如果是ajax类型，响应<span class="built_in">logout</span>给前台</span><br><span class="line">			response.setHeader(<span class="string">"sessionstatus"</span>, <span class="string">"timeout"</span>);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			String param =request.getRequestURI().replace(request.getContextPath(), <span class="string">""</span>);</span><br><span class="line">			</span><br><span class="line">			response.sendRedirect(request.getContextPath() +</span><br><span class="line">					<span class="string">"/webpage/login.jsp?forwardURL="</span>+param);// 首页居多</span><br><span class="line">		&#125;</span><br><span class="line">		logger.error(<span class="string">"session status timeout "</span>);</span><br><span class="line">		<span class="built_in">return</span> <span class="literal">false</span>;// 终止后面的拦截器的执行</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line">@Override</span><br><span class="line">public void postHandle(HttpServletRequest req, HttpServletResponse res, Object arg2, </span><br><span class="line">	ModelAndView arg3)throws Exception &#123;</span><br><span class="line">	<span class="keyword">if</span> (arg3 != null) &#123;</span><br><span class="line">		arg3.addObject(<span class="string">"user"</span>, req.getSession().getAttribute(Constant.LoginField.USER));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public void afterCompletion(HttpServletRequest req, HttpServletResponse res, Object arg2,</span><br><span class="line">	Exception arg3)throws Exception &#123;</span><br><span class="line">	<span class="keyword">if</span> (req.getRequestURI().equals(req.getContextPath() + <span class="string">"/login"</span>)) &#123;</span><br><span class="line">		UserObject user = (UserObject) req.getSession().getAttribute(Constant.LoginField.USER);</span><br><span class="line">		<span class="keyword">if</span>(user != null)</span><br><span class="line">			OperatorLog.execOptLog(user,Constant.LogField.XXBH, Constant.LogField.XXMC,</span><br><span class="line">			OperateType.RUNLOG, req.getAttribute(<span class="string">"msg"</span>)!=null</span><br><span class="line">					?req.getAttribute(<span class="string">"msg"</span>).toString():<span class="string">""</span>);</span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (arg2 instanceof HandlerMethod) &#123;</span><br><span class="line">		HandlerMethod handlerMethod = (HandlerMethod) arg2;</span><br><span class="line">		//读取配置文件loginfo.properites等后续逻辑操作，具体实现后附</span><br><span class="line">		iLogService.saveLogInfo(req, handlerMethod);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2、配置文件loginfo-properites"><a href="#2、配置文件loginfo-properites" class="headerlink" title="2、配置文件loginfo.properites"></a>2、配置文件loginfo.properites</h3><p><i><b>步骤1：</b></i>在工程中conf文件夹中新建一个loginfo.properites文件，如下图所示<br><img src="/images/mypic/rizhi/rizhi-4.jpg"></p>
+<p><b>内部配置内容概览</b></p>
+<p><img src="/images/mypic/rizhi/rizhi-5.jpg"></p>
+<p><b>配置具体说明和生成内容展示</b></p>
+<p><img src="/images/mypic/rizhi/rizhi-6.jpg"><br><img src="/images/mypic/rizhi/rizhi-7.jpg"></p>
+<p><b>切记：</b></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">注意：</span><br><span class="line">	需要对中文进行ASCII转码</span><br></pre></td></tr></table></figure>
+<p><i><b>步骤2：</b></i>配置文件的解析和应用<br><b>承接UserInterceptor.afterCompletion()方法中调用的saveLogInfo(params)方法</b><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">public void saveLogInfo(HttpServletRequest request, HandlerMethod handlerMethod) </span><br><span class="line">		throws Exception &#123;</span><br><span class="line">//获取配置文件参数</span><br><span class="line">String key = handlerMethod.getBeanType().getName() + <span class="string">"."</span> </span><br><span class="line">			+ handlerMethod.getMethod().getName();</span><br><span class="line">String logInfo = properties.getProperty(key);</span><br><span class="line">//只对于在配置文件中进行配置的方法 记录日志</span><br><span class="line"><span class="keyword">if</span> (logInfo != null &amp;&amp; logInfo.length() &gt; 0) &#123;</span><br><span class="line">	String values = properties.getProperty(key + <span class="string">".prefix"</span>);</span><br><span class="line">	//存储配置文件中的K-V</span><br><span class="line">	Map&lt;String, String&gt; kv = new HashMap();</span><br><span class="line">	Map&lt;String, String&gt; nameValue = new HashMap();</span><br><span class="line">	//如果方法中有参数</span><br><span class="line">	<span class="keyword">if</span> (values != null &amp;&amp; values.length() &gt; 0) &#123;</span><br><span class="line">		String[] split = values.split(<span class="string">","</span>);</span><br><span class="line">		<span class="keyword">if</span> (split.length &gt; 0) &#123;</span><br><span class="line">			<span class="keyword">for</span> (String s : split) &#123;</span><br><span class="line">				String[] keyVulse = s.split(<span class="string">"-"</span>);</span><br><span class="line">				nameValue.put(keyVulse[0], keyVulse[1]);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (handlerMethod.getMethodParameters() != null &amp;&amp;</span><br><span class="line">			handlerMethod.getMethodParameters().length &gt; 0) &#123;</span><br><span class="line">		<span class="keyword">for</span> (MethodParameter paramter : handlerMethod.getMethodParameters()) &#123;</span><br><span class="line">			String name = paramter.getParameterName();</span><br><span class="line">			String value = request.getParameter(name);</span><br><span class="line">			kv.put(name, value);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	//如果不为空则将logInfo中的参数进行转化成中文说明</span><br><span class="line">	<span class="keyword">if</span> (!kv.isEmpty()) &#123;</span><br><span class="line">		<span class="keyword">for</span> (Map.Entry&lt;String, String&gt; m :</span><br><span class="line">				kv.entrySet()) &#123;</span><br><span class="line">			<span class="keyword">if</span> (logInfo.contains(<span class="string">"&#123;"</span> + m.getKey() + <span class="string">"&#125;"</span>)) &#123;</span><br><span class="line">				logInfo = logInfo.replace(<span class="string">"<span class="variable">$&#123;" + m.getKey() + "&#125;</span>"</span>, <span class="string">"   "</span> </span><br><span class="line">					+ nameValue.get(m.getKey()) </span><br><span class="line">					+ <span class="string">":"</span> + m.getValue() + <span class="string">""</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	//进行数据库操作</span><br><span class="line">	OperatorLog.execOptLog((UserObject) request.getSession().getAttribute(Constant.LoginField.USER),</span><br><span class="line">	Constant.LogField.XXBH, Constant.LogField.XXMC, OperateType.RUNLOG, logInfo);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static boolean execOptLog(UserObject user, String systemId, String SysName,</span><br><span class="line">	OperateType operateType,String operateDesc) &#123;</span><br><span class="line">   boolean flag = <span class="literal">false</span>;</span><br><span class="line">   try &#123;</span><br><span class="line">      <span class="keyword">if</span>(user==null || systemId==null || SysName==null || operateType==null || operateDesc==null)</span><br><span class="line">         <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">      String id = UUID.randomUUID().toString();</span><br><span class="line">      String sql = <span class="string">"insert into "</span>+ TableName.LOG+<span class="string">" (LCODE,PNAME,IPADDRESS,EVENT,Entertime,</span></span><br><span class="line"><span class="string">	UserID,LType,SysServiceId,ServiceName) values('"</span></span><br><span class="line">	+ id + <span class="string">"','"</span> + user.getUserId() + <span class="string">"','"</span> + user.getIp() + <span class="string">"','"</span> + operateDesc + <span class="string">"',sysdate(),'"</span></span><br><span class="line">	+ user.getUserCode() + <span class="string">"','"</span> + getOprateType(operateType) + <span class="string">"','"</span> + systemId + <span class="string">"','"</span> + SysName</span><br><span class="line">	+ <span class="string">"')"</span>;</span><br><span class="line">      flag = iLogService.execSql(sql);</span><br><span class="line">      logger.info(sql);</span><br><span class="line">   &#125; catch (Exception e) &#123;</span><br><span class="line">      logger.error(<span class="string">"操作日志插入日志失败"</span>, e);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="built_in">return</span> flag;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public boolean execSql(String sql) throws Exception &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">        this.getJdbcTemplate().execute(sql);</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125; catch (Exception e) &#123;</span><br><span class="line">        <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="3、持久化保存"><a href="#3、持久化保存" class="headerlink" title="3、持久化保存"></a>3、持久化保存</h3><p><b>将日志信息持久化保存，表字段如图</b></p>
+<p><img src="/images/mypic/rizhi/rizhi-8.png"><br><img src="/images/mypic/rizhi/rizhi-9.jpg"></p>
+<h2 id="五、结语"><a href="#五、结语" class="headerlink" title="五、结语"></a>五、结语</h2><p><b><h4>    本文章重在对于有一定spring基础的开发人员在未接触过日志模块下不知如何入手时提供一种思路，重点需要体会有两处，<br>    1 自定义拦截器实现方式<br>    2 生成日志流程</h4></b></p>
+
+            </div>
+
+            <!-- Post Comments -->
+            
+    <!-- 使用 DISQUS_CLICK -->
+<div id="disqus-comment">
+    <div id="disqus_thread"></div>
+
+<!-- add animation -->
+<style>
+	.disqus_click_btn {
+            line-height: 30px;
+            margin: 0;
+            min-width: 50px;
+            padding: 0 14px;
+            display: inline-block;
+            font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            overflow: hidden;
+            will-change: box-shadow;
+            transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
+            outline: 0;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            vertical-align: middle;
+            border: 0;
+            background: rgba(158, 158, 158, .2);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+            color: #fff;
+            background-color: #7EC0EE;
+            text-shadow: 0
+        }
+</style>
+	
+<div class="btn_click_load" id="disqus_bt"> 
+    <button class="disqus_click_btn">点击查看评论</button>
+</div>
+
+<!--
+<script type="text/javascript">
+$('.btn_click_load').click(function() {
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'http-miccall-tech'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    document.getElementById('disqus_bt').style.display = "none";
+});
+</script>
+-->
+<script type="text/javascript">
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2018/02/11/日志/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://yoursite.com/2018/02/11/日志/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+</script>
+
+<script type="text/javascript">
+    $('.btn_click_load').click(function() {  //click to load comments
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document;
+            var s = d.createElement('script');
+            s.src = '//http-miccall-tech.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', + new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+        $('.btn_click_load').css('display','none');
+    });
+</script>
+</div>
+<style>
+    #disqus-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+
+
+        </div>
+        <!-- Copyright 版权 start -->
+                <div id="copyright">
+            <ul>
+                <li>&copy;Powered By <a href="https://hexo.io/zh-cn/" style="border-bottom: none;">hexo</a></li>
+                <li>Design: <a href="http://miccall.tech " style="border-bottom: none;">miccall</a></li>
+            </ul>
+            
+            	<span id="busuanzi_container_site_pv">2018总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+			
+        </div>
+    </div>
+</body>
+
+
+
+ 	
+</html>
